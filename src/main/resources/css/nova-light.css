@@ -1,0 +1,16 @@
+.root { -nova-bg: #f4f5fb; -nova-side: #e6e8f5; -nova-card: #ffffff; -nova-text: #1b1d33; -nova-muted: #6a6d8f; -nova-accent: #5b3df5; }
+.nova-root { -fx-background-color: -nova-bg; }
+.label, .check-box { -fx-text-fill: -nova-text; }
+.muted { -fx-text-fill: -nova-muted; }
+.h1 { -fx-font-size: 2em; -fx-font-weight: bold; }
+.sidebar { -fx-background-color: -nova-side; }
+.brand { -fx-font-size: 1.5em; -fx-font-weight: bold; -fx-text-fill: -nova-accent; -fx-padding: 0 0 16 0; }
+.nav-btn { -fx-background-color: transparent; -fx-text-fill: -nova-text; -fx-alignment: CENTER_LEFT; -fx-padding: 10 14; -fx-background-radius: 10; }
+.nav-btn:hover { -fx-background-color: -nova-card; }
+.nav-btn:selected { -fx-background-color: -nova-accent; -fx-text-fill: white; }
+.play { -fx-background-color: -nova-accent; -fx-text-fill: white; -fx-font-size: 1.8em; -fx-font-weight: bold; -fx-padding: 18 72; -fx-background-radius: 18; }
+.play:disabled { -fx-opacity: 0.45; }
+.button { -fx-background-color: -nova-card; -fx-text-fill: -nova-text; -fx-background-radius: 8; -fx-padding: 8 18; }
+.list-view { -fx-background-color: -nova-card; -fx-background-radius: 10; }
+.list-cell { -fx-background-color: transparent; -fx-text-fill: -nova-text; }
+.list-cell:selected { -fx-background-color: -nova-accent; }

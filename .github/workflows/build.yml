@@ -1,0 +1,36 @@
+name: build-windows-installer
+on:
+  push: { branches: [main, master], tags: ['v*'] }
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.10.2' }
+      - name: Tests and app image
+        run: gradle test installDist --no-daemon
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: test-reports, path: build/reports/tests/test }
+      - name: Build Windows installer
+        shell: pwsh
+        run: |
+          jpackage --type exe --name "Nova Launcher" --app-version 0.2.0 --vendor "Nova Launcher" `
+            --input build/install/nova-launcher/lib --main-jar nova-launcher.jar --main-class app.nova.Main `
+            --add-modules java.base,java.desktop,java.logging,java.net.http,java.xml,jdk.unsupported,jdk.crypto.ec `
+            --win-menu --win-shortcut --win-dir-chooser --win-per-user-install `
+            --win-upgrade-uuid 7c1f1b0e-5a3d-4c36-9b6e-2f4a8d9e1a10 --dest dist
+      - uses: actions/upload-artifact@v4
+        with: { name: NovaLauncher-installer, path: dist/*.exe }
+      - name: Publish release (only for tags like v0.2.0)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with: { files: dist/*.exe }
